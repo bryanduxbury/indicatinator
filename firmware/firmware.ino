@@ -13,7 +13,7 @@ int numLedsLit = 0;
 void setup() {
   servo1.attach(9);
   Serial.begin(9600);
-//  startupSequence();
+  startupSequence();
   servoDegrees = 90;
 }
 
@@ -26,13 +26,20 @@ void loop() {
   updateExternals();
 }
 
-//void startupSequence() {
-//  for (int i = 0; i <= 180; i++) {
-//    servoDegrees = i;
-//    numLedsLit = float(servoDegrees)/MAX_DEGREES * NUM_LEDS;
-//    updateExternals();
-//  }
-//}
+void startupSequence() {
+  for (int i = 0; i < NUM_LEDS; i++) {
+    pinMode(FIRST_LED_PIN + i, OUTPUT);
+  }
+  
+  for (int i = 0; i <= 180; i++) {
+    servoDegrees = i;
+    numLedsLit = float(servoDegrees)/MAX_DEGREES * NUM_LEDS;
+    int endTime = millis() + 20;
+    while (millis() < endTime) {
+      updateExternals();
+    }
+  }
+}
 
 void updateExternals() {
   servo1.write(servoDegrees);
