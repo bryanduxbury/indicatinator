@@ -22,6 +22,7 @@ void setup() {
 
 void loop() {
   startupSequence();
+
 //  if (Serial.available()) {
 //    servoDegrees = min(180, max(0, Serial.read())); 
 //    numLedsLit = float(servoDegrees)/MAX_DEGREES * NUM_LEDS;
@@ -31,21 +32,41 @@ void loop() {
 }
 
 void startupSequence() {
+  for (int i = 0; i < NUM_LEDS; i++) {
+    digitalWrite(FIRST_LED_PIN + i, HIGH);
+    delay(200);
+    digitalWrite(FIRST_LED_PIN + i, LOW);
+  }
+  
   for (int i = 0; i <= 180; i++) {
     servoDegrees = i;
     numLedsLit = float(servoDegrees)/MAX_DEGREES * NUM_LEDS;
-    int endTime = millis() + 20;
+    int endTime = millis() + 200;
     while (millis() < endTime) {
       updateExternals();
     }
   }
 }
 
+void delayMicros(long usec) {
+  unsigned long start = micros(); 
+  while (micros() - usec < start) {}  
+}
+  
 void updateExternals() {
   servo1.write(servoDegrees);
-  for (int i = 0; i < numLedsLit; i++) {
-    digitalWrite(FIRST_LED_PIN + i, HIGH);
-    delay(1);
-    digitalWrite(FIRST_LED_PIN + i, LOW);
+  
+  for (int i = FIRST_LED_PIN; i < FIRST_LED_PIN+numLedsLit; i+=5) {
+    for (int j = 0; j < 5 && i + j < FIRST_LED_PIN+numLedsLit; j++) {
+      digitalWrite(i + j, HIGH);
+    }
+  }
+
+  delay(100);
+  
+  for (int i = FIRST_LED_PIN; i < FIRST_LED_PIN+numLedsLit; i+=5) {
+    for (int j = 0; j < 5 && i + j < FIRST_LED_PIN+numLedsLit; j++) {
+      digitalWrite(i + j, LOW);
+    }
   }
 }
