@@ -29,6 +29,14 @@ void loop() {
 void startupSequence() {
   for (int i = 0; i < NUM_LEDS; i++) {
     pinMode(FIRST_LED_PIN + i, OUTPUT);
+    digitalWrite(FIRST_LED_PIN + i, HIGH);
+    delay(200);
+    digitalWrite(FIRST_LED_PIN + i, LOW);
+  }
+  
+  for (int i = 0; i <= 180; i++) {
+    servo1.write(i);
+    delay(150);
   }
   
   for (int i = 0; i <= 180; i++) {
@@ -41,11 +49,17 @@ void startupSequence() {
   }
 }
 
+void delayMicros(int usec) {
+  int start = micros();
+  while (micros() - usec < start) {}  
+}
+  
 void updateExternals() {
   servo1.write(servoDegrees);
+  
   for (int i = 0; i < numLedsLit; i++) {
     digitalWrite(FIRST_LED_PIN + i, HIGH);
-    delay(1);
     digitalWrite(FIRST_LED_PIN + i, LOW);
   }
+  delayMicros(10);
 }
