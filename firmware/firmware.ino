@@ -55,16 +55,11 @@ void startupSequence() {
 //    delay(200);
 //    digitalWrite(FIRST_LED_PIN + i, LOW);
   }
-  
-//  for (int i = 0; i <= 180; i++) {
-//    servo1.write(i);
-//    delay(150);
-//  }
-  
-//  for (int i = 0; i <= 180; i++) {
+
+//  for (int i = 180; i >= 0; i--) {
 //    servoDegrees = i;
 //    numLedsLit = float(servoDegrees)/MAX_DEGREES * NUM_LEDS;
-//    unsigned long endTime = millis() + 5;
+//    long endTime = millis() + 5;
 //    while (millis() < endTime) {
 //      updateExternals();
 //    }
@@ -76,11 +71,7 @@ void updateLEDs() {
     for (int j = 0; j < 5 && i + j < FIRST_LED_PIN+numLedsLit; j++) {
       digitalWrite(i + j, HIGH);
     }
-  }
-
-  delay(100);
-  
-  for (int i = FIRST_LED_PIN; i < FIRST_LED_PIN+numLedsLit; i+=5) {
+    delay(1);
     for (int j = 0; j < 5 && i + j < FIRST_LED_PIN+numLedsLit; j++) {
       digitalWrite(i + j, LOW);
     }
