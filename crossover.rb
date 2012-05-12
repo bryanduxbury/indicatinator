@@ -100,7 +100,7 @@ max_length_scheme = 0
 best_schemes = []
 
 for scheme in schemes
-  occ = [["0", "1", "2", "3", "4", "0'", "1'", "2'", "3'", "4'"]]
+  occ = [["0", "1", "2", "3", "4", "0", "1", "2", "3", "4"]]
 
   while true
     cur = occ.last
